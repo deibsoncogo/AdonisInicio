@@ -1,28 +1,53 @@
-# Adonis API application
+# Iniciando com AdonisJS, um framework completo para NodeJS
+Meu primeiro contato com o Adonis JS, conteúdo administrado pelo Diego Fernandes da Rocketseat
 
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
+## Anotações
+A dependência Nodemon já vem instalada e mais algumas configurações feitas como uma migration de usuário e token
 
-1. Bodyparser
-2. Authentication
-3. CORS
-4. Lucid ORM
-5. Migrations and seeds
-
-## Setup
-
-Use the adonis command to install the blueprint
-
+## Comandos
+Para realizar a instalação do `Adonis JS` de forma global foi utilizado o seguinte comando com o `Yarn`
 ```bash
-adonis new yardstick --api-only
+yarn global add @adonisjs/cli
 ```
 
-or manually clone the repo and then run `npm install`.
+Para criar o projeto utilizamos este comando, onde o `--api-only` defini que queremos uma aplicação sem views
+```bash
+adonis new adonisinicio --api-only
+```
 
+Foi criado dois controller com os seguintes comandos
+```bash
+adonis make:controller Auth
+adonis make:controller App
+```
 
-### Migrations
+### Banco de dados
+Como vamos utilizar o `Postgres` como banco de dados devemos instalar seu driver
+```bash
+yarn add pg
+```
 
-Run the following command to run startup migrations.
+Depois foi utilizado o seguinte comando para criar um container com o `Docker`
+```bash
+docker run --name AdonisInicio -e POSTGRES_DB=adonisinicioDB -e POSTGRES_USER=adonisinicio -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
+```
 
-```js
+Depois realizamos a configuração do arquivo `.env` para conseguir acessar o banco de dados
+```bash
+DB_CONNECTION=pg
+DB_PORT=5432
+DB_USER=adonisinicio
+DB_PASSWORD=docker
+DB_DATABASE=adonisinicioDB
+```
+
+Por fim executamos este comandos para criar os migrations que veio na aplicação
+```bash
 adonis migration:run
+```
+
+### Executando o servidor
+Para dar inicio do servidor basta utilizar o seguinte comando onde ele vai rodar na porta 3333
+```bash
+adonis serve --dev
 ```
